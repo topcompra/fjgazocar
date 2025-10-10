@@ -9,12 +9,16 @@
       --bg-color: #f9f9f9;
       --text-color: #000;
       --card-color: #ffffff;
+      --hover-bg: rgba(0, 0, 0, 0.05);
+      --shadow: rgba(0, 0, 0, 0.25);
     }
 
     [data-theme="dark"] {
       --bg-color: #121212;
       --text-color: #f5f5f5;
       --card-color: #1f1f1f;
+      --hover-bg: rgba(255, 255, 255, 0.1);
+      --shadow: rgba(0, 0, 0, 0.5);
     }
 
     body {
@@ -34,7 +38,17 @@
       top: 20px;
       right: 20px;
       cursor: pointer;
-      font-size: 20px;
+      font-size: 24px;
+      padding: 8px;
+      border-radius: 50%;
+      background-color: var(--card-color);
+      box-shadow: 0 2px 8px var(--shadow);
+      transition: transform 0.2s;
+      user-select: none;
+    }
+
+    .toggle-theme:hover {
+      transform: scale(1.1);
     }
 
     .container {
@@ -43,8 +57,8 @@
       padding: 20px;
       border-radius: 8px;
       background-color: var(--card-color);
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
-      max-width: 800px;
+      box-shadow: 0 0 15px var(--shadow);
+      max-width: 500px;
       gap: 20px;
       transition: background 0.3s;
     }
@@ -52,6 +66,12 @@
     .profile-picture {
       width: 80px;
       height: 80px;
+      flex-shrink: 0;
+      transition: transform 0.3s;
+    }
+
+    .profile-picture:hover {
+      transform: scale(1.05);
     }
 
     .profile-picture img {
@@ -74,15 +94,21 @@
     ul {
       padding-left: 0;
       list-style: none;
+      margin: 0;
+    }
+
+    ul li {
+      margin: 8px 0;
     }
 
     a {
       color: var(--text-color);
       text-decoration: none;
+      transition: opacity 0.2s;
     }
 
     a:hover {
-      text-decoration: underline;
+      opacity: 0.7;
     }
 
     .icon {
@@ -90,13 +116,23 @@
       height: 20px;
       vertical-align: middle;
     }
+
+    .linkedin-icon {
+      filter: brightness(0) saturate(100%) invert(27%) sepia(98%) saturate(1307%) hue-rotate(185deg);
+    }
+
+    [data-theme="dark"] .linkedin-icon {
+      filter: brightness(0) invert(1);
+    }
   </style>
 </head>
 <body data-theme="light">
-  <div class="toggle-theme" onclick="toggleTheme()">🌓</div>
+  <div class="toggle-theme" onclick="toggleTheme()" aria-label="Toggle theme">
+    <span id="theme-icon">🌙</span>
+  </div>
 
   <div class="container">
-    <a href="https://www.linkedin.com/in/fjgazocar/">
+    <a href="https://www.linkedin.com/in/fjgazocar/" aria-label="LinkedIn profile">
       <div class="profile-picture">
         <img src="images/letter_fj.svg" alt="Profile Picture" />
       </div>
@@ -104,22 +140,35 @@
 
     <div class="content">
       <h2>
-        <img class="icon" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn" style="filter: invert(20%);" />
+        <img class="icon linkedin-icon" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="" />
         <a href="https://www.linkedin.com/in/fjgazocar/">Francisco Gonzalez</a>
       </h2>
-      <p><a href="mailto:fjgazocar@gmail.com">📧 fjgazocar@gmail.com</a></p>
-      <p><a href="tel:+18574069077">📞 +1 857 406 9077</a></p>
-      <p><a href="francisco_gonzalez_resume.pdf" target="_blank">📋 Resume</a></p>
-      <p><a href="https://github.com/topcompra" target="_blank">💻 GitHub</a></p>
+      <ul>
+        <li><a href="mailto:fjgazocar@gmail.com">📧 fjgazocar@gmail.com</a></li>
+        <li><a href="tel:+18574069077">📞 +1 857 406 9077</a></li>
+        <li><a href="francisco_gonzalez_resume.pdf" target="_blank">📋 Resume</a></li>
+        <li><a href="https://github.com/topcompra" target="_blank">💻 GitHub</a></li>
+      </ul>
     </div>
   </div>
 
   <script>
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.body.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+
     function toggleTheme() {
       const body = document.body;
       const currentTheme = body.getAttribute("data-theme");
       const newTheme = currentTheme === "light" ? "dark" : "light";
       body.setAttribute("data-theme", newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeIcon(newTheme);
+    }
+
+    function updateThemeIcon(theme) {
+      document.getElementById('theme-icon').textContent = theme === 'light' ? '🌙' : '☀️';
     }
   </script>
 </body>

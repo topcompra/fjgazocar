@@ -1,0 +1,12 @@
+<svg transform="rotate(270,32,32)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <g transform="rotate(90, 32, 32)">
+    <!-- Left vertical (longer) -->
+    <path d="M20 8 L20 56" stroke="currentColor" stroke-width="6" stroke-linecap="square"/>
+    <!-- Right vertical (shorter, offset) -->
+    <path d="M28 12 L28 52" stroke="currentColor" stroke-width="6" stroke-linecap="square"/>
+    <!-- Top horizontal (flat) -->
+    <path d="M16 18 L52 18" stroke="currentColor" stroke-width="8" stroke-linecap="square"/>
+    <!-- Middle horizontal (inclined, arrow feel) -->
+    <path d="M16 38 L44 34" stroke="currentColor" stroke-width="8" stroke-linecap="square"/>
+  </g>
+</svg>
