@@ -1,175 +1,377 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Francisco Gonzalez</title>
-  <style>
-    :root {
-      --bg-color: #f9f9f9;
-      --text-color: #000;
-      --card-color: #ffffff;
-      --hover-bg: rgba(0, 0, 0, 0.05);
-      --shadow: rgba(0, 0, 0, 0.25);
-    }
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Francisco Gonzalez</title>
 
-    [data-theme="dark"] {
-      --bg-color: #121212;
-      --text-color: #f5f5f5;
-      --card-color: #1f1f1f;
-      --hover-bg: rgba(255, 255, 255, 0.1);
-      --shadow: rgba(0, 0, 0, 0.5);
-    }
+        <style>
+            :root {
+                --bg: #f9f9f9;
+                --card: #ffffff;
+                --text: #111;
+                --muted: #777;
+                --border: rgba(0, 0, 0, 0.08);
+                --shadow: rgba(0, 0, 0, 0.18);
+                --hover: rgba(0, 0, 0, 0.04);
+            }
 
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      transition: background 0.3s, color 0.3s;
-    }
+            [data-theme="dark"] {
+                --bg: #0f0f0f;
+                --card: #171717;
+                --text: #f2f2f2;
+                --muted: #666;
+                --border: rgba(255, 255, 255, 0.08);
+                --shadow: rgba(0, 0, 0, 0.6);
+                --hover: rgba(255, 255, 255, 0.05);
+            }
 
-    .toggle-theme {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      cursor: pointer;
-      font-size: 24px;
-      padding: 8px;
-      border-radius: 50%;
-      background-color: var(--card-color);
-      box-shadow: 0 2px 8px var(--shadow);
-      transition: transform 0.2s;
-      user-select: none;
-    }
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
 
-    .toggle-theme:hover {
-      transform: scale(1.1);
-    }
+            body {
+                min-height: 100vh;
+                background: var(--bg);
+                color: var(--text);
+                font-family: Arial, sans-serif;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
 
-    .container {
-      display: flex;
-      align-items: center;
-      padding: 20px;
-      border-radius: 8px;
-      background-color: var(--card-color);
-      box-shadow: 0 0 15px var(--shadow);
-      max-width: 500px;
-      gap: 20px;
-      transition: background 0.3s;
-    }
+            .toggle-theme {
+                position: fixed;
+                top: 18px;
+                right: 18px;
+                cursor: pointer;
+                font-size: 20px;
+                padding: 8px;
+                border-radius: 50%;
+                background: var(--card);
+                box-shadow: 0 2px 8px var(--shadow);
+                user-select: none;
+                z-index: 20;
+            }
 
-    .profile-picture {
-      width: 80px;
-      height: 80px;
-      flex-shrink: 0;
-      transition: transform 0.3s;
-    }
+            .card {
+                position: relative;
+                width: min(92vw, 620px);
+                background: var(--card);
+                border-radius: 12px;
+                box-shadow: 0 0 22px var(--shadow);
+                overflow: hidden;
+            }
 
-    .profile-picture:hover {
-      transform: scale(1.05);
-    }
+            .brand-mark {
+                position: absolute;
+                top: 17px;
+                right: 20px;
+                width: 34px;
+                height: 34px;
+                opacity: 0.9;
+                z-index: 5;
+            }
 
-    .profile-picture img {
-      width: 125%;
-      height: 125%;
-      transform: rotate(180deg);
-    }
+            .brand-mark img {
+                width: 120%;
+                height: 120%;
+                transform: rotate(180deg);
+            }
 
-    .content {
-      text-align: left;
-    }
+            .identity-top {
+                padding: 18px 72px 12px 72px;
+                text-align: center;
+                border-bottom: 1px solid var(--border);
+            }
 
-    h2 {
-      margin: 0 0 10px 0;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+            .identity-top h1 {
+                font-size: 1rem;
+                font-weight: 700;
+                letter-spacing: -0.01em;
+                margin-bottom: 7px;
+            }
 
-    ul {
-      padding-left: 0;
-      list-style: none;
-      margin: 0;
-    }
+            .identity-links {
+                display: flex;
+                justify-content: center;
+                gap: 14px;
+                flex-wrap: wrap;
+                font-size: 0.76rem;
+            }
 
-    ul li {
-      margin: 8px 0;
-    }
+            a {
+                color: var(--text);
+                text-decoration: none;
+                transition: opacity 0.2s;
+            }
 
-    a {
-      color: var(--text-color);
-      text-decoration: none;
-      transition: opacity 0.2s;
-    }
+            a:hover {
+                opacity: 0.58;
+            }
 
-    a:hover {
-      opacity: 0.7;
-    }
+            .hero {
+                padding: 22px 26px 16px;
+                border-bottom: 1px solid var(--border);
+            }
 
-    .icon {
-      width: 20px;
-      height: 20px;
-      vertical-align: middle;
-    }
+            .hero-label {
+                text-align: center;
+                font-size: 0.6rem;
+                text-transform: uppercase;
+                letter-spacing: 0.14em;
+                color: var(--muted);
+                margin-bottom: 8px;
+            }
 
-    .linkedin-icon {
-      filter: brightness(0) saturate(100%) invert(27%) sepia(98%) saturate(1307%) hue-rotate(185deg);
-    }
+            .hero-title {
+                text-align: center;
+                font-size: 1.35rem;
+                font-weight: 800;
+                line-height: 1.18;
+                letter-spacing: -0.03em;
+                margin-bottom: 8px;
+            }
 
-    [data-theme="dark"] .linkedin-icon {
-      filter: brightness(0) invert(1);
-    }
-  </style>
-</head>
-<body data-theme="light">
-  <div class="toggle-theme" onclick="toggleTheme()" aria-label="Toggle theme">
-    <span id="theme-icon">🌙</span>
-  </div>
+            .hero-specs {
+                display: flex;
+                justify-content: center;
+                gap: 16px;
+                flex-wrap: wrap;
+                font-size: 0.74rem;
+                color: var(--muted);
+                margin-bottom: 16px;
+            }
 
-  <div class="container">
-    <a href="https://www.linkedin.com/in/fjgazocar/" aria-label="LinkedIn profile">
-      <div class="profile-picture">
-        <img src="images/letter_fj.svg" alt="Profile Picture" />
-      </div>
-    </a>
+            .hero-specs strong {
+                color: var(--text);
+                font-weight: 700;
+            }
 
-    <div class="content">
-      <h2>
-        <img class="icon linkedin-icon" src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="" />
-        <a href="https://www.linkedin.com/in/fjgazocar/">Francisco Gonzalez</a>
-      </h2>
-      <ul>
-        <li><a href="mailto:fjgazocar@gmail.com">📧 fjgazocar@gmail.com</a></li>
-        <li><a href="tel:+18574069077">📞 +1 857 406 9077</a></li>
-        <li><a href="francisco_gonzalez_resume.pdf" target="_blank">📋 Resume</a></li>
-        <li><a href="https://github.com/topcompra" target="_blank">💻 GitHub</a></li>
-      </ul>
-    </div>
-  </div>
+            .video-slot {
+                width: 100%;
+                aspect-ratio: 16 / 9;
+                background: var(--hover);
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                overflow: hidden;
+                position: relative;
+                cursor: pointer;
+            }
 
-  <script>
-    // Load saved theme
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.body.setAttribute('data-theme', savedTheme);
-    updateThemeIcon(savedTheme);
+            .video-slot iframe,
+            .video-slot video {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
+                object-fit: cover;
 
-    function toggleTheme() {
-      const body = document.body;
-      const currentTheme = body.getAttribute("data-theme");
-      const newTheme = currentTheme === "light" ? "dark" : "light";
-      body.setAttribute("data-theme", newTheme);
-      localStorage.setItem('theme', newTheme);
-      updateThemeIcon(newTheme);
-    }
+                /* crop bottom (hide OS bar) */
+                transform: scale(1.06);
+                transform-origin: top;
+            }
 
-    function updateThemeIcon(theme) {
-      document.getElementById('theme-icon').textContent = theme === 'light' ? '🌙' : '☀️';
-    }
-  </script>
-</body>
+            .vid-cover {
+                position: absolute;
+                inset: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                transition: background 0.2s;
+            }
+
+            .vid-cover:hover {
+                background: rgba(0, 0, 0, 0.035);
+            }
+
+            .play-btn {
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                background: var(--card);
+                border: 1px solid var(--border);
+                box-shadow: 0 2px 8px var(--shadow);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 16px;
+                flex-shrink: 0;
+            }
+
+            .vid-cover span {
+                font-size: 0.76rem;
+                color: var(--muted);
+            }
+
+            .proof {
+                padding: 13px 24px;
+                border-bottom: 1px solid var(--border);
+                text-align: center;
+                font-size: 0.76rem;
+                color: var(--muted);
+                line-height: 1.45;
+            }
+
+            .proof strong {
+                color: var(--text);
+                font-weight: 650;
+            }
+
+            .contact-strip {
+                padding: 13px 24px 15px;
+                display: flex;
+                justify-content: center;
+                gap: 16px;
+                flex-wrap: wrap;
+                font-size: 0.78rem;
+            }
+
+            @media (max-height: 720px) {
+                .identity-top {
+                    padding-top: 14px;
+                    padding-bottom: 10px;
+                }
+
+                .hero {
+                    padding: 18px 22px 13px;
+                }
+
+                .hero-title {
+                    font-size: 1.2rem;
+                }
+
+                .proof {
+                    padding: 10px 22px;
+                }
+
+                .contact-strip {
+                    padding: 10px 22px 12px;
+                }
+            }
+
+            @media (max-width: 520px) {
+                .brand-mark {
+                    width: 30px;
+                    height: 30px;
+                    top: 14px;
+                    right: 14px;
+                }
+
+                .identity-top {
+                    padding-left: 48px;
+                    padding-right: 48px;
+                }
+
+                .hero-specs {
+                    gap: 10px;
+                }
+
+                .identity-links,
+                .contact-strip {
+                    gap: 10px;
+                }
+            }
+        </style>
+    </head>
+
+    <body data-theme="dark">
+        <div class="toggle-theme" onclick="toggleTheme()">
+            <span id="theme-icon">🌙</span>
+        </div>
+
+        <main class="card">
+            <a
+                class="brand-mark"
+                href="https://www.linkedin.com/in/fjgazocar/"
+                aria-label="Francisco Gonzalez LinkedIn"
+            >
+                <img src="images/letter_fj.svg" alt="FJ" />
+            </a>
+
+            <section class="identity-top">
+                <h1>Francisco Gonzalez</h1>
+
+                <div class="identity-links">
+                    <a
+                        href="https://www.linkedin.com/in/fjgazocar/"
+                        target="_blank"
+                        >LinkedIn</a
+                    >
+                    <a href="mailto:fjgazocar@gmail.com">Email</a>
+                    <a href="francisco_gonzalez_resume.pdf" target="_blank"
+                        >Resume</a
+                    >
+                    <a href="https://github.com/topcompra" target="_blank"
+                        >GitHub</a
+                    >
+                    <a href="tel:+18574069077">857-406-9077</a>
+                </div>
+            </section>
+
+            <section class="hero">
+                <div class="hero-label">featured system</div>
+
+                <div class="hero-title">Real-Time Market Data Engine</div>
+
+                <div class="hero-specs">
+                    <div><strong>16ms</strong> frame budget</div>
+                    <div><strong>~120 FPS</strong> peak</div>
+                    <div><strong>ZMQ</strong> streaming</div>
+                </div>
+
+                <div class="video-slot">
+                    <video controls autoplay muted loop>
+                        <source src="chart_presentation.mp4" type="video/mp4" />
+                    </video>
+                </div>
+            </section>
+
+            <section class="proof">
+                <strong>Tick-level ingestion</strong> →
+                <strong>ZMQ live feed</strong> →
+                <strong>real-time rasterized analytics UI</strong>
+            </section>
+
+            <section class="contact-strip">
+                <a href="mailto:fjgazocar@gmail.com">Contact</a>
+                <a href="francisco_gonzalez_resume.pdf" target="_blank"
+                    >View Resume</a
+                >
+                <a href="https://github.com/topcompra" target="_blank"
+                    >GitHub</a
+                >
+                <a href="https://www.linkedin.com/in/fjgazocar/" target="_blank"
+                    >LinkedIn</a
+                >
+            </section>
+        </main>
+
+        <script>
+            const saved = localStorage.getItem("theme") || "dark";
+            document.body.setAttribute("data-theme", saved);
+            updateIcon(saved);
+
+            function toggleTheme() {
+                const next =
+                    document.body.getAttribute("data-theme") === "light"
+                        ? "dark"
+                        : "light";
+                document.body.setAttribute("data-theme", next);
+                localStorage.setItem("theme", next);
+                updateIcon(next);
+            }
+
+            function updateIcon(theme) {
+                document.getElementById("theme-icon").textContent =
+                    theme === "light" ? "🌙" : "☀️";
+            }
+        </script>
+    </body>
 </html>
