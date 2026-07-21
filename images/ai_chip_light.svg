@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
+  <style>
+    .neutral-stroke { stroke: #111111; }
+    .neutral-fill { fill: #111111; }
+    .trajectory-stroke { stroke: #111111; }
+    .trajectory-fill { fill: #111111; }
+    .red-wick { stroke: #7e2c24; }
+    .red-body { fill: #b13f31; }
+    .green-wick { stroke: #225e43; }
+    .green-body { fill: #2f7a57; }
+    .green-highlight-wick { stroke: #0f6f4d; }
+    .green-highlight-body { fill: #14865f; }
+  </style>
+
+  <!-- Neutral chip package: black in light mode, white in dark mode. -->
+  <g class="neutral-stroke" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4.25 0.75v1.7M6.75 0.75v1.7M9.25 0.75v1.7M11.75 0.75v1.7
+             M4.25 13.55v1.7M6.75 13.55v1.7M9.25 13.55v1.7M11.75 13.55v1.7
+             M0.75 4.25h1.7M0.75 6.75h1.7M0.75 9.25h1.7M0.75 11.75h1.7
+             M13.55 4.25h1.7M13.55 6.75h1.7M13.55 9.25h1.7M13.55 11.75h1.7"
+          stroke-width="0.82"/>
+
+    <rect x="2.35" y="2.35" width="11.3" height="11.3" rx="1.85" stroke-width="0.9"/>
+    <rect x="3.12" y="3.12" width="9.76" height="9.76" rx="1.12"
+          stroke-width="0.34" opacity="0.52"/>
+
+    <path d="M3.55 5.05V4.25l.7-.7h1.4l.55.55h.75
+             M9.7 3.55h1.75l1 .95v1.15
+             M3.55 10.45v1.25l.7.75H5.7l.5-.5h.8
+             M9.15 12.45h1.75l1.55-1.45v-.8"
+          stroke-width="0.3" opacity="0.56"/>
+
+    <circle class="neutral-fill" cx="6.95" cy="4.1" r="0.23" stroke="none" opacity="0.7"/>
+    <circle class="neutral-fill" cx="9.7" cy="3.55" r="0.23" stroke="none" opacity="0.7"/>
+    <circle class="neutral-fill" cx="7" cy="11.95" r="0.23" stroke="none" opacity="0.7"/>
+    <circle class="neutral-fill" cx="9.15" cy="12.45" r="0.23" stroke="none" opacity="0.7"/>
+  </g>
+
+  <!-- Neutral data trajectory keeps the icon readable in both modes. -->
+  <path class="trajectory-stroke"
+        d="M3.85 7.65 5.65 5.9 7.8 6.9 9.9 5.15 12.05 4.2"
+        stroke-width="0.62" stroke-linecap="round" stroke-linejoin="round" opacity="0.78"/>
+  <g class="trajectory-fill" opacity="0.9">
+    <circle cx="3.85" cy="7.65" r="0.4"/>
+    <circle cx="5.65" cy="5.9" r="0.4"/>
+    <circle cx="7.8" cy="6.9" r="0.4"/>
+    <circle cx="9.9" cy="5.15" r="0.4"/>
+    <circle cx="12.05" cy="4.2" r="0.4"/>
+  </g>
+
+  <!-- Theme-specific candle colors. -->
+  <path class="red-wick" d="M4.2 8.1v3.75" stroke-width="0.58" stroke-linecap="round"/>
+  <rect class="red-body" x="3.55" y="8.72" width="1.3" height="2.25" rx="0.28"/>
+
+  <path class="green-wick" d="M6.65 7.35v3.8" stroke-width="0.58" stroke-linecap="round"/>
+  <rect class="green-body" x="6" y="7.95" width="1.3" height="2.35" rx="0.28"/>
+
+  <path class="red-wick" d="M9.05 8.05v3.65" stroke-width="0.58" stroke-linecap="round"/>
+  <rect class="red-body" x="8.4" y="8.65" width="1.3" height="2.05" rx="0.28"/>
+
+  <path class="green-highlight-wick" d="M11.45 6.45v4.6" stroke-width="0.62" stroke-linecap="round"/>
+  <rect class="green-highlight-body" x="10.78" y="7.18" width="1.34" height="2.85" rx="0.3"/>
+
+  <path class="neutral-stroke" d="M4.15 12.05h1.05M10.8 11.85h1.05M11.85 6.1v.55"
+        stroke-width="0.28" stroke-linecap="round" opacity="0.46"/>
+</svg>

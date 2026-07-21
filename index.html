@@ -292,7 +292,7 @@
                 href="https://www.linkedin.com/in/fjgazocar/"
                 aria-label="Francisco Gonzalez LinkedIn"
             >
-                <img src="images/letter_fj.svg" alt="FJ" />
+                <img id="brand-icon" src="images/ai_chip_dark.svg" alt="FJ" />
             </a>
 
             <section class="identity-top">
@@ -356,21 +356,30 @@
         <script>
             const saved = localStorage.getItem("theme") || "dark";
             document.body.setAttribute("data-theme", saved);
-            updateIcon(saved);
+            updateThemeUI(saved);
 
             function toggleTheme() {
                 const next =
                     document.body.getAttribute("data-theme") === "light"
                         ? "dark"
                         : "light";
+
                 document.body.setAttribute("data-theme", next);
                 localStorage.setItem("theme", next);
-                updateIcon(next);
+                updateThemeUI(next);
             }
 
-            function updateIcon(theme) {
+            function updateThemeUI(theme) {
                 document.getElementById("theme-icon").textContent =
                     theme === "light" ? "🌙" : "☀️";
+
+                const brandIcon = document.getElementById("brand-icon");
+                if (brandIcon) {
+                    brandIcon.src =
+                        theme === "light"
+                            ? "images/ai_chip_light.svg"
+                            : "images/ai_chip_dark.svg";
+                }
             }
         </script>
     </body>
