@@ -128,6 +128,52 @@
                 margin-bottom: 8px;
             }
 
+            .project-switcher {
+                display: flex;
+                justify-content: center;
+                gap: 6px;
+                margin: 0 auto 12px;
+                padding: 4px;
+                width: fit-content;
+                max-width: 100%;
+                border: 1px solid var(--border);
+                border-radius: 9px;
+                background: var(--hover);
+            }
+
+            .project-tab {
+                appearance: none;
+                border: 0;
+                border-radius: 6px;
+                padding: 7px 11px;
+                background: transparent;
+                color: var(--muted);
+                font: inherit;
+                font-size: 0.7rem;
+                font-weight: 700;
+                cursor: pointer;
+                white-space: nowrap;
+                transition:
+                    background 0.18s ease,
+                    color 0.18s ease,
+                    box-shadow 0.18s ease;
+            }
+
+            .project-tab:hover {
+                color: var(--text);
+            }
+
+            .project-tab.is-active {
+                color: var(--text);
+                background: var(--card);
+                box-shadow: 0 1px 5px var(--shadow);
+            }
+
+            .project-tab:focus-visible {
+                outline: 2px solid var(--text);
+                outline-offset: 2px;
+            }
+
             .hero-title {
                 text-align: center;
                 font-size: 1.35rem;
@@ -316,24 +362,51 @@
             </section>
 
             <section class="hero">
-                <div class="hero-label">featured system</div>
+                <div class="hero-label">featured projects</div>
 
-                <div class="hero-title">Real-Time Market Data Engine</div>
+                <div class="project-switcher" role="tablist" aria-label="Project videos">
+                    <button
+                        class="project-tab is-active"
+                        type="button"
+                        role="tab"
+                        aria-selected="true"
+                        data-project="market"
+                    >
+                        Market Engine
+                    </button>
+                    <button
+                        class="project-tab"
+                        type="button"
+                        role="tab"
+                        aria-selected="false"
+                        data-project="luptracer"
+                    >
+                        Luptracer
+                    </button>
+                </div>
 
-                <div class="hero-specs">
+                <div class="hero-title" id="project-title">
+                    Real-Time Market Data Engine
+                </div>
+
+                <div class="hero-specs" id="project-specs">
                     <div><strong>16.65ms</strong> frame budget</div>
                     <div><strong>~120 FPS</strong> peak</div>
                     <div><strong>ZMQ</strong> streaming</div>
                 </div>
 
                 <div class="video-slot">
-                    <video controls autoplay muted loop>
-                        <source src="chart_presentation.mp4" type="video/mp4" />
+                    <video id="project-video" controls autoplay muted loop playsinline>
+                        <source
+                            id="project-video-source"
+                            src="chart_presentation.mp4"
+                            type="video/mp4"
+                        />
                     </video>
                 </div>
             </section>
 
-            <section class="proof">
+            <section class="proof" id="project-proof">
                 <strong>Tick-level ingestion</strong> →
                 <strong>ZMQ live feed</strong> →
                 <strong>real-time rasterized analytics UI</strong>
@@ -354,6 +427,83 @@
         </main>
 
         <script>
+            const projects = {
+                market: {
+                    title: "Real-Time Market Data Engine",
+                    video: "chart_presentation.mp4",
+                    specs: [
+                        ["16.65ms", "frame budget"],
+                        ["~120 FPS", "peak"],
+                        ["ZMQ", "streaming"],
+                    ],
+                    proof: [
+                        "Tick-level ingestion",
+                        "ZMQ live feed",
+                        "real-time rasterized analytics UI",
+                    ],
+                },
+                luptracer: {
+                    title: "Luptracer Performance Profiler",
+                    video: "luptracer_presentation.mp4",
+                    specs: [
+                        ["Low-overhead", "tracing"],
+                        ["Frame-level", "timing"],
+                        ["Python", "diagnostics"],
+                    ],
+                    proof: [
+                        "Runtime instrumentation",
+                        "bottleneck visibility",
+                        "targeted latency optimization",
+                    ],
+                },
+            };
+
+            const projectTabs = document.querySelectorAll(".project-tab");
+            const projectTitle = document.getElementById("project-title");
+            const projectSpecs = document.getElementById("project-specs");
+            const projectProof = document.getElementById("project-proof");
+            const projectVideo = document.getElementById("project-video");
+            const projectVideoSource = document.getElementById(
+                "project-video-source",
+            );
+
+            function selectProject(projectKey) {
+                const project = projects[projectKey];
+                if (!project) return;
+
+                projectTabs.forEach((tab) => {
+                    const isActive = tab.dataset.project === projectKey;
+                    tab.classList.toggle("is-active", isActive);
+                    tab.setAttribute("aria-selected", String(isActive));
+                });
+
+                projectTitle.textContent = project.title;
+                projectSpecs.innerHTML = project.specs
+                    .map(
+                        ([value, label]) =>
+                            `<div><strong>${value}</strong> ${label}</div>`,
+                    )
+                    .join("");
+                projectProof.innerHTML = project.proof
+                    .map((item) => `<strong>${item}</strong>`)
+                    .join(" → ");
+
+                if (projectVideoSource.getAttribute("src") !== project.video) {
+                    projectVideo.pause();
+                    projectVideoSource.setAttribute("src", project.video);
+                    projectVideo.load();
+                    projectVideo.play().catch(() => {
+                        // Playback can still be started with the native controls.
+                    });
+                }
+            }
+
+            projectTabs.forEach((tab) => {
+                tab.addEventListener("click", () => {
+                    selectProject(tab.dataset.project);
+                });
+            });
+
             const saved = localStorage.getItem("theme") || "dark";
             document.body.setAttribute("data-theme", saved);
             updateThemeUI(saved);
